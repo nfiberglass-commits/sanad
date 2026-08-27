@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// One WhatsApp message, email, or transcript chunk
+model Message {
+  id          String    @id @default(cuid())
+  source      String // whatsapp | email_biz | email_gmail | transcript
+  externalRef String? // drive file id / message-id / upload filename
+  author      String // "self" | "other"
+  counterpart String? // anonymized label e.g. "Contact A"
+  lang        String // ar | en | mixed
+  sentAt      DateTime?
+  content     String
+  contentHash String    @unique
+  createdAt   DateTime  @default(now())
+}
+
+model StyleProfile {
+  id         String   @id @default(cuid())
+  version    Int
+  json       String // full profile JSON (spec §F2)
+  sampleSize Int
+  createdAt  DateTime @default(now())
+}
+
+model Session {
+  id         String   @id @default(cuid())
+  mode       String // roleplay | speech_drill | presentation | micro
+  scenario   String?
+  transcript String // full session log (turns as JSON)
+  audioPath  String?
+  metrics    String? // JSON: wpm, fillers, pauses...
+  scores     String? // JSON: 6-axis rubric
+  debrief    String? // coach summary markdown
+  createdAt  DateTime @default(now())
+}
+
+model Drill {
+  id         String   @id @default(cuid())
+  date       DateTime
+  focusArea  String
+  prompt     String
+  userAnswer String?
+  feedback   String?
+  completed  Boolean  @default(false)
+}
+
+// Local-only mapping of real counterpart names to stable pseudonyms.
+// This table never leaves the machine.
+model Pseudonym {
+  id        String   @id @default(cuid())
+  realName  String   @unique
+  label     String   @unique
+  createdAt DateTime @default(now())
+}
+
+// Words the speech model should EXPECT: team names, products, sites, jargon.
+// Fed into the transcription prompt so "الرسومات" stops becoming "الاسمات".
+model VocabTerm {
+  id        String   @id @default(cuid())
+  term      String   @unique
+  kind      String // person | product | place | term
+  source    String // manual | learned
+  hits      Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+// Learned from the user correcting a transcript: wrong -> right.
+// Applied automatically to later transcripts once seen enough times.
+model Correction {
+  id        String   @id @default(cuid())
+  wrong     String
+  right     String
+  count     Int      @default(1)
+  updatedAt DateTime @updatedAt
+
+  @@unique([wrong, right])
+}

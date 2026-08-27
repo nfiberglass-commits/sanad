@@ -1,0 +1,48 @@
+{
+  "name": "commcoach",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "vitest run",
+    "db:push": "prisma db push",
+    "licence:new": "node scripts/make-licence-key.mjs",
+    "setup:migrate": "node scripts/migrate-env-to-settings.mjs",
+    "setup:reset": "node scripts/setup-reset.mjs",
+    "cost:measure": "node scripts/measure-token-costs.mjs",
+    "cost:model": "node scripts/package-economics.mjs",
+    "copy:customer": "node scripts/make-customer-copy.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.119.0",
+    "@prisma/client": "^6.19.3",
+    "adm-zip": "^0.6.0",
+    "lucide-react": "^1.33.0",
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "recharts": "^3.10.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/adm-zip": "^0.5.8",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.1",
+    "prisma": "^6.19.3",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "^4.1.11"
+  },
+  "allowScripts": {
+    "@prisma/client@6.19.3": true,
+    "@prisma/engines@6.19.3": true,
+    "prisma@6.19.3": true
+  }
+}

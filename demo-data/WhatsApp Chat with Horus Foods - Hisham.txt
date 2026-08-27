@@ -1,0 +1,39 @@
+[15/06/2026, 10:30:30 am] Tarek Abdelmoneim: Good morning Mr Hisham. Thank you for confirming the order, we start production Sunday.
+[15/06/2026, 10:42:54 am] Hisham Bakry: Great. Please keep the printing exactly like the approved sample.
+[15/06/2026, 10:46:22 am] Tarek Abdelmoneim: Absolutely. I will send you photos from the line before we ship.
+[15/06/2026, 11:06:42 am] Hisham Bakry: image omitted
+[15/06/2026, 11:09:03 am] Tarek Abdelmoneim: Received, thank you.
+[18/06/2026, 1:05:35 pm] Hisham Bakry: Any chance we get the shipment by the 4th? Our line is waiting.
+[18/06/2026, 1:08:56 pm] Tarek Abdelmoneim: No problem, we can deliver on the 4th.
+[18/06/2026, 1:14:38 pm] Hisham Bakry: Perfect, appreciated.
+[18/06/2026, 1:18:06 pm] Tarek Abdelmoneim: Always a pleasure working with you.
+[23/06/2026, 5:20:20 pm] Hisham Bakry: Tarek, it is the 23rd and we still have nothing. My factory manager is asking me every day.
+[23/06/2026, 5:29:23 pm] Tarek Abdelmoneim: I understand completely, and I am sorry for the delay.
+The printing batch failed our own quality check and I refused to ship it to you.
+The shipment will load tomorrow 7 am and reach you the same day.
+[23/06/2026, 5:36:12 pm] Hisham Bakry: Ok. But please, next time tell me early.
+[23/06/2026, 5:39:33 pm] Tarek Abdelmoneim: You are right. That is on me.
+[23/06/2026, 5:44:08 pm] Hisham Bakry: Thank you for being straight with me.
+[23/06/2026, 5:46:22 pm] Tarek Abdelmoneim: Always.
+[24/06/2026, 7:40:40 am] Tarek Abdelmoneim: Loading now. Photos coming in 10 minutes.
+[24/06/2026, 7:46:22 am] Hisham Bakry: Thanks Tarek.
+[24/06/2026, 7:54:18 am] Tarek Abdelmoneim: image omitted
+[24/06/2026, 7:57:39 am] Tarek Abdelmoneim: Truck left the factory 7:35. Driver number with your logistics team.
+[24/06/2026, 8:22:34 am] Hisham Bakry: Received, all good.
+[30/06/2026, 11:15:45 am] Hisham Bakry: We need to talk about the price for the next quarter. Our budget is tighter this year.
+[30/06/2026, 11:23:41 am] Tarek Abdelmoneim: Happy to discuss. Can we do a call Thursday morning?
+[30/06/2026, 11:28:16 am] Hisham Bakry: Thursday 10 works.
+[30/06/2026, 11:32:44 am] Tarek Abdelmoneim: Booked. I will come with the cost breakdown so the conversation is on facts, not feelings.
+[30/06/2026, 11:39:33 am] Hisham Bakry: That is why I like dealing with you.
+[09/07/2026, 4:50:50 pm] Hisham Bakry: One of the pallets had a smudged print. Not a disaster but the QA guy raised it.
+[09/07/2026, 4:57:39 pm] Tarek Abdelmoneim: Thank you for telling me directly. Send me the batch code, I will trace it tonight.
+[09/07/2026, 5:08:56 pm] Hisham Bakry: <Media omitted>
+[09/07/2026, 5:12:24 pm] Tarek Abdelmoneim: Got it. I will come back to you tomorrow with the root cause and what we changed.
+[09/07/2026, 5:18:06 pm] Hisham Bakry: Appreciated.
+[09/07/2026, 5:23:41 pm] Tarek Abdelmoneim: And we will credit that pallet on the next invoice. No argument needed.
+[09/07/2026, 5:26:02 pm] Hisham Bakry: Very fair.
+[16/07/2026, 9:25:55 am] Tarek Abdelmoneim: Mr Hisham, quick update: the root cause was a worn print roller. It is replaced and we added a weekly check.
+[16/07/2026, 9:40:40 am] Hisham Bakry: Good. That is what I wanted to hear.
+[16/07/2026, 9:46:22 am] Tarek Abdelmoneim: Also, your Q3 volumes are locked in our plan. No surprises from our side.
+[16/07/2026, 9:54:18 am] Hisham Bakry: Let us keep it that way.
+[16/07/2026, 9:57:39 am] Tarek Abdelmoneim: Deal.
