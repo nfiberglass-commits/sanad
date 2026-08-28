@@ -74,23 +74,30 @@ export async function POST(req: NextRequest) {
     .map((m) => `${m.role === "user" ? "USER" : "COUNTERPART"}: ${m.content}`)
     .join("\n\n");
 
-  const res = await client.messages.create({
-    model: MODEL(),
-    max_tokens: 8000,
-    system: loadPrompt("debrief-coach"),
-    messages: [
-      {
-        role: "user",
-        content: `Scenario: ${scenarioTitle} (difficulty ${difficulty}/5, text mode — presence_delivery score must be null). ${relationshipNote}\n\nSession transcript:\n\n${transcript}`,
-      },
-    ],
-  });
-  const text = res.content.filter((b) => b.type === "text").map((b) => b.text).join("");
-
-  let debrief: DebriefJson;
-  try {
-    debrief = extractJson<DebriefJson>(text);
-  } catch {
+  // The model occasionally wraps or truncates the JSON. Retry once
+  // server-side before surfacing an error — the user should never have to
+  // press the button twice for a formatting hiccup.
+  let debrief: DebriefJson | null = null;
+  for (let attempt = 0; attempt < 2 && !debrief; attempt++) {
+    const res = await client.messages.create({
+      model: MODEL(),
+      max_tokens: 8000,
+      system: loadPrompt("debrief-coach"),
+      messages: [
+        {
+          role: "user",
+          content: `Scenario: ${scenarioTitle} (difficulty ${difficulty}/5, text mode — presence_delivery score must be null). ${relationshipNote}\n\nSession transcript:\n\n${transcript}`,
+        },
+      ],
+    });
+    const text = res.content.filter((b) => b.type === "text").map((b) => b.text).join("");
+    try {
+      debrief = extractJson<DebriefJson>(text);
+    } catch {
+      // fall through to the retry; error only after the second miss
+    }
+  }
+  if (!debrief) {
     return NextResponse.json(
       { error: "Coach response was not valid JSON — try ending the session again." },
       { status: 502 }

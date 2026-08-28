@@ -51,6 +51,44 @@ export default function RoleplayChat({ scenarios, lang }: { scenarios: ScenarioL
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [turns, coachNote, debrief]);
 
+  // A live conversation used to exist only in component state — one reload or
+  // stray navigation destroyed it. Draft every turn to localStorage and
+  // restore once on mount; the draft dies when the debrief lands or a new
+  // scenario starts.
+  const DRAFT_KEY = "sanad_roleplay_draft";
+  const restoredRef = useRef(false);
+  useEffect(() => {
+    if (restoredRef.current) return;
+    restoredRef.current = true;
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (!raw) return;
+      const d = JSON.parse(raw);
+      if (!d?.scenario?.id || !Array.isArray(d.turns) || d.turns.length === 0) return;
+      setScenario(d.scenario);
+      setRelationship(typeof d.relationship === "string" ? d.relationship : "peer");
+      setDifficulty(typeof d.difficulty === "number" ? d.difficulty : 3);
+      setTurns(d.turns);
+    } catch {
+      // corrupt/blocked storage — start clean
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    try {
+      if (debrief) {
+        localStorage.removeItem(DRAFT_KEY);
+      } else if (scenario && turns.length > 0) {
+        localStorage.setItem(
+          DRAFT_KEY,
+          JSON.stringify({ scenario, relationship, difficulty, turns, savedAt: Date.now() })
+        );
+      }
+    } catch {
+      // storage unavailable — the session still works, just without the net
+    }
+  }, [scenario, relationship, difficulty, turns, debrief]);
+
   async function callRoleplay(history: Turn[], coach = false): Promise<string> {
     const res = await fetch("/api/coach/roleplay", {
       method: "POST",
@@ -93,6 +131,7 @@ export default function RoleplayChat({ scenarios, lang }: { scenarios: ScenarioL
   }
 
   async function start(s: ScenarioLite) {
+    try { localStorage.removeItem(DRAFT_KEY); } catch {}
     setScenario(s);
     setDifficulty(s.defaultDifficulty);
     setTurns([]);
