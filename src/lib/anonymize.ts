@@ -36,9 +36,51 @@ export async function getOrCreateLabel(realName: string): Promise<string> {
 
 const PHONE = /(?:\+?\d[\d\s\-()]{7,}\d)/g;
 const EMAIL = /[\w.+-]+@[\w-]+\.[\w.]+/g;
+const URL = /(?:https?:\/\/|www\.)[^\s<>"«»]+/gi;
+
+// Symbols that show up in real passwords but not in product or order codes.
+// Hyphen, underscore, dot and slash are code punctuation and do NOT count —
+// "STP-IR-Y18" and "SO3437" must survive untouched.
+const HARD_SYMBOL = /[!@#$%^&*+=?~]/;
+
+// A standalone token shaped like a credential: 8+ chars, letters AND digits,
+// plus mixed case or a hard symbol.
+function looksLikeSecret(token: string): boolean {
+  const w = token.replace(/^["'«(\[]+|["'»)\].,;:!?؟،]+$/g, "");
+  if (w.length < 8) return false;
+  if (!/[A-Za-z]/.test(w) || !/\d/.test(w)) return false;
+  return (/[a-z]/.test(w) && /[A-Z]/.test(w)) || HARD_SYMBOL.test(w);
+}
+
+// Words that announce a credential, Arabic or English.
+const PWD_WORD = /(password|passw|pwd|باسورد|السر|المرور|السري)/i;
+const PWD_WORD_EXACT = /^(pass|pw)[:=]?$/i;
+
+// After a password word, the first nearby token holding latin letters or
+// digits is treated as the credential itself — catches lowercase-only
+// passwords ("nile2026") that the shape heuristic cannot flag safely.
+function maskPasswordMentions(s: string): string {
+  const parts = s.split(/(\s+)/);
+  for (let i = 0; i < parts.length; i += 2) {
+    const tok = parts[i] ?? "";
+    if (!PWD_WORD.test(tok) && !PWD_WORD_EXACT.test(tok)) continue;
+    let seen = 0;
+    for (let j = i + 2; j < parts.length && seen < 4; j += 2, seen++) {
+      const cand = parts[j] ?? "";
+      if (/[A-Za-z0-9]/.test(cand) && cand.length >= 4) {
+        parts[j] = "[secret]";
+        break;
+      }
+    }
+  }
+  return parts.join("");
+}
 
 export function maskContent(s: string): string {
-  return s.replace(EMAIL, "[email]").replace(PHONE, "[phone]");
+  let out = s.replace(URL, "[link]").replace(EMAIL, "[email]").replace(PHONE, "[phone]");
+  out = maskPasswordMentions(out);
+  out = out.replace(/\S+/g, (tok) => (looksLikeSecret(tok) ? "[secret]" : tok));
+  return out;
 }
 
 // Replace every known real counterpart name appearing inside message text
