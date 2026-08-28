@@ -3,7 +3,7 @@ import ModelPicker from "@/components/ModelPicker";
 import VocabManager from "@/components/VocabManager";
 import AliasEditor from "@/components/AliasEditor";
 import PasswordChanger from "@/components/PasswordChanger";
-import { currentModel, MODELS, readAppSettings, selfAliases } from "@/lib/settings";
+import { currentModel, MODELS, readAppSettings, selfAliases, isOwner } from "@/lib/settings";
 import { maskLicenceKey } from "@/lib/licence";
 import { getLang } from "@/lib/lang-server";
 import { t } from "@/lib/i18n";
@@ -30,11 +30,17 @@ export default async function SettingsPage() {
         </div>
         <div className="flex justify-between items-center gap-4 border-b border-slate-200 pb-2">
           <span className="text-slate-500">{t(lang, "model")}</span>
-          <ModelPicker
-            current={currentModel()}
-            models={MODELS.map((m) => ({ id: m.id, label: m.label }))}
-            lang={lang}
-          />
+          {isOwner() ? (
+            <ModelPicker
+              current={currentModel()}
+              models={MODELS.map((m) => ({ id: m.id, label: m.label }))}
+              lang={lang}
+            />
+          ) : (
+            <span className="text-slate-800">
+              {MODELS.find((m) => m.id === currentModel())?.label ?? currentModel()}
+            </span>
+          )}
         </div>
         {settings.displayName && (
           <div className="flex justify-between items-center gap-4 border-b border-slate-200 pb-2">

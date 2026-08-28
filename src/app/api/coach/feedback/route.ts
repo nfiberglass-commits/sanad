@@ -20,7 +20,7 @@ const Body = z.object({
       })
     )
     .min(2)
-    .max(200),
+    .max(30),
 });
 
 interface AxisScore {
@@ -74,6 +74,16 @@ export async function POST(req: NextRequest) {
     .map((m) => `${m.role === "user" ? "USER" : "COUNTERPART"}: ${m.content}`)
     .join("\n\n");
 
+  // Save the session BEFORE the LLM call — a failed debrief must never cost
+  // the user their conversation. Scores and the coach text land in an update.
+  const session = await prisma.session.create({
+    data: {
+      mode: "roleplay",
+      scenario: scenarioTitle,
+      transcript: JSON.stringify({ scenarioId, difficulty, relationship, customSituation, messages }),
+    },
+  });
+
   // The model occasionally wraps or truncates the JSON. Retry once
   // server-side before surfacing an error — the user should never have to
   // press the button twice for a formatting hiccup.
@@ -99,7 +109,7 @@ export async function POST(req: NextRequest) {
   }
   if (!debrief) {
     return NextResponse.json(
-      { error: "Coach response was not valid JSON — try ending the session again." },
+      { error: "Coach response was not valid JSON — try ending the session again.", sessionId: session.id },
       { status: 502 }
     );
   }
@@ -113,11 +123,9 @@ export async function POST(req: NextRequest) {
       ? Math.round((numeric.reduce((a, b) => a + b, 0) / numeric.length) * 10) / 10
       : null;
 
-  const session = await prisma.session.create({
+  await prisma.session.update({
+    where: { id: session.id },
     data: {
-      mode: "roleplay",
-      scenario: scenarioTitle,
-      transcript: JSON.stringify({ scenarioId, difficulty, relationship, customSituation, messages }),
       scores: JSON.stringify({ overall, axes: debrief.scores }),
       debrief: debrief.debrief_markdown,
     },

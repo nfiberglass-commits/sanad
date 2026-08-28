@@ -39,6 +39,10 @@ const dict = {
   mode_roleplay: ["Roleplay", "تمرين مواقف"],
   mode_speech: ["Speech drill", "تمرين صوت"],
   all_sessions: ["All sessions", "كل الجلسات"],
+  turn_cap_hint: [
+    "Session limit reached — close and evaluate, then start a fresh session.",
+    "وصلت لحد الجلسة — اقفل وقيّم، وابدأ جلسة جديدة.",
+  ],
   logout: ["Logout", "خروج"],
 
   // login

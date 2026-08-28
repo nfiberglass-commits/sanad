@@ -52,6 +52,18 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // Save first — the recording's transcript and metrics must survive a
+  // failed coaching call.
+  const session = await prisma.session.create({
+    data: {
+      mode: "speech_drill",
+      scenario: exercise,
+      transcript,
+      audioPath: audioPath ?? null,
+      metrics: JSON.stringify({ ...metrics, tone: toneObj ?? null }),
+    },
+  });
+
   const res = await client.messages.create({
     model: MODEL(),
     max_tokens: 1500,
@@ -67,15 +79,9 @@ Voice/tone measurements (computed from the audio waveform): ${toneObj?.available
   });
   const feedback = res.content.filter((b) => b.type === "text").map((b) => b.text).join("");
 
-  const session = await prisma.session.create({
-    data: {
-      mode: "speech_drill",
-      scenario: exercise,
-      transcript,
-      audioPath: audioPath ?? null,
-      metrics: JSON.stringify({ ...metrics, tone: toneObj ?? null }),
-      debrief: feedback,
-    },
+  await prisma.session.update({
+    where: { id: session.id },
+    data: { debrief: feedback },
   });
 
   // Each drill refines this user's own range, so the next one is judged

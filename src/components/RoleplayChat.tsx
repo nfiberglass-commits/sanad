@@ -17,6 +17,11 @@ interface Turn {
   content: string;
 }
 
+// Server rejects longer sessions (zod .max(30)) — each extra turn resends the
+// whole history, so cost grows quadratically. Leave room for the final
+// user + counterpart pair.
+const MAX_TURNS = 30;
+
 interface AxisScore {
   score: number | null;
   quote: string;
@@ -153,6 +158,7 @@ export default function RoleplayChat({ scenarios, lang }: { scenarios: ScenarioL
   async function send() {
     const text = input.trim();
     if (!text || streaming || !scenario) return;
+    if (turns.length >= MAX_TURNS - 1) return;
     setInput("");
     setError(null);
     setCoachNote(null);
@@ -347,6 +353,12 @@ export default function RoleplayChat({ scenarios, lang }: { scenarios: ScenarioL
 
       {error && <p className="text-sm text-red-600">{error}</p>}
 
+      {!debrief && turns.length >= MAX_TURNS - 1 && (
+        <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+          {tr(lang, "turn_cap_hint")}
+        </p>
+      )}
+
       {!debrief && (
         <div className="flex gap-2">
           <textarea
@@ -366,7 +378,7 @@ export default function RoleplayChat({ scenarios, lang }: { scenarios: ScenarioL
           <div className="flex flex-col gap-2">
             <button
               onClick={send}
-              disabled={streaming || input.trim() === ""}
+              disabled={streaming || input.trim() === "" || turns.length >= MAX_TURNS - 1}
               className="bg-emerald-600 hover:bg-emerald-500 text-white disabled:opacity-40 rounded px-4 py-1.5 text-sm"
             >
               {tr(lang, "send")}

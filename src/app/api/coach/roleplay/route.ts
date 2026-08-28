@@ -28,7 +28,7 @@ const Body = z.object({
         content: z.string().min(1).max(8000),
       })
     )
-    .max(200),
+    .max(30),
 });
 
 export async function POST(req: NextRequest) {
