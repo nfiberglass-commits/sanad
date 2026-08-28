@@ -105,6 +105,49 @@ const dict = {
   dim_presence: ["Presence", "الحضور"],
   dim_adaptation: ["Adaptation", "التكيّف"],
   dim_code_switching: ["Arabic/English mixing", "خلط العربي بالإنجليزي"],
+  // One-line definitions. The SAME wording lives in prompts/profile-analyzer.md
+  // and prompts/debrief-coach.md — change them together or scores drift from
+  // what the UI tells the user the number means.
+  dim_def_clarity: [
+    "Is the point understood on first read, with no ambiguity.",
+    "هل المقصود بيوصل من أول قراءة، من غير لبس.",
+  ],
+  dim_def_conciseness: [
+    "Says it in the fewest words that keep the meaning.",
+    "توصيل المعنى بأقل كلام ممكن من غير حشو.",
+  ],
+  dim_def_assertiveness: [
+    "A clear ask and a firm position — no hedging or over-softening.",
+    "طلب واضح وموقف محدد — من غير تردد أو تليين زيادة.",
+  ],
+  dim_def_structure: [
+    "Ideas arrive in a logical order: context, point, ask.",
+    "الكلام ماشي بترتيب: الموضوع، التفاصيل، المطلوب.",
+  ],
+  dim_def_empathy: [
+    "Warmth of the wording — does it acknowledge the other person, or read dry.",
+    "دفء الصياغة — الكلام حاسس بالطرف التاني ولا ناشف.",
+  ],
+  dim_def_persuasion: [
+    "Backs the ask with reasons and benefit, not just instructions.",
+    "بتدعم طلبك بسبب ومنفعة، مش أوامر وبس.",
+  ],
+  dim_def_listening: [
+    "Do replies show you heard and understood before answering.",
+    "هل ردودك بتبيّن إنك سمعت وفهمت الطرف التاني قبل ما ترد.",
+  ],
+  dim_def_presence: [
+    "Confidence of delivery: pace, pauses, and tone of voice.",
+    "ثقة الإلقاء: السرعة والوقفات ونبرة الصوت.",
+  ],
+  dim_def_adaptation: [
+    "Adjusting style to the person and the situation.",
+    "تغيير أسلوبك حسب الشخص والموقف.",
+  ],
+  dim_def_code_switching: [
+    "How often Arabic and English mix inside one sentence.",
+    "قد إيه العربي والإنجليزي بيتخلطوا في نفس الجملة.",
+  ],
 
   // roleplay
   roleplay_title: ["Meeting Roleplay", "تمرين المواقف"],
@@ -279,4 +322,17 @@ export const DIMENSION_KEYS: Record<string, DictKey> = {
   // The profile prompt scores this too; without a label it rendered its raw
   // English key on the Arabic page.
   code_switching: "dim_code_switching",
+};
+
+export const DIMENSION_DEFS: Record<string, DictKey> = {
+  clarity: "dim_def_clarity",
+  conciseness: "dim_def_conciseness",
+  assertiveness: "dim_def_assertiveness",
+  structure: "dim_def_structure",
+  empathy_tone: "dim_def_empathy",
+  persuasion: "dim_def_persuasion",
+  listening_signals: "dim_def_listening",
+  presence_delivery: "dim_def_presence",
+  adaptation: "dim_def_adaptation",
+  code_switching: "dim_def_code_switching",
 };

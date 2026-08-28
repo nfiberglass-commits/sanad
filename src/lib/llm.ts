@@ -12,7 +12,7 @@ export function getClient(): Anthropic {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     throw new Error(
-      "ANTHROPIC_API_KEY is not set. Add it to .env.local and restart the app."
+      "ANTHROPIC_API_KEY is missing. Open .env.local in the Sanad folder, add ANTHROPIC_API_KEY=sk-ant-…, then close the black window and reopen Start-Sanad.bat. The Guide page shows the steps."
     );
   }
   return new Anthropic({ apiKey });

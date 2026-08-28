@@ -3,7 +3,7 @@ import { latestProfile, type ProfileDimension } from "@/lib/profile";
 import RadarProfile from "@/components/RadarProfile";
 import GenerateProfileButton from "@/components/GenerateProfileButton";
 import { getLang } from "@/lib/lang-server";
-import { t, DIMENSION_KEYS } from "@/lib/i18n";
+import { t, DIMENSION_KEYS, DIMENSION_DEFS } from "@/lib/i18n";
 
 export const dynamic = "force-dynamic";
 
@@ -93,6 +93,11 @@ export default async function ProfilePage() {
                     </span>
                   )}
                 </div>
+                {DIMENSION_DEFS[key] && (
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    {t(lang, DIMENSION_DEFS[key])}
+                  </p>
+                )}
                 <p className="text-sm text-slate-600 mt-1" dir="auto">
                   {(dim as { notes?: string }).notes}
                 </p>

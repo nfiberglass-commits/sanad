@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { getLang } from "@/lib/lang-server";
-import { t, DIMENSION_KEYS } from "@/lib/i18n";
+import { t, DIMENSION_KEYS, DIMENSION_DEFS } from "@/lib/i18n";
 import { mdToHtml } from "@/lib/markdown";
 
 export const dynamic = "force-dynamic";
@@ -73,7 +73,11 @@ export default async function SessionDetailPage({
           <h2 className="font-medium text-emerald-700 mb-3">{t(lang, "sess_scores")}</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {Object.entries(axes).map(([k, v]) => (
-              <div key={k} className="border border-slate-200 rounded-lg p-2.5">
+              <div
+                key={k}
+                title={DIMENSION_DEFS[k] ? t(lang, DIMENSION_DEFS[k]) : undefined}
+                className="border border-slate-200 rounded-lg p-2.5"
+              >
                 <p className="text-xs text-slate-500">
                   {DIMENSION_KEYS[k] ? t(lang, DIMENSION_KEYS[k]) : k}
                 </p>

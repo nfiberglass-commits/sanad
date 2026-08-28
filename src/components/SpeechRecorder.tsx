@@ -259,11 +259,13 @@ export default function SpeechRecorder({ lang }: { lang: Lang }) {
           <Stat
             label={L("Delivery", "النبرة")}
             value={
-              tone.delivery === "flat"
-                ? L("Flat", "رتيبة")
-                : tone.delivery === "varied"
-                  ? L("Lively", "متنوعة")
-                  : L("Moderate", "متوسطة")
+              tone.delivery === "unknown"
+                ? L("Not measured", "متقاسش")
+                : tone.delivery === "flat"
+                  ? L("Flat", "رتيبة")
+                  : tone.delivery === "varied"
+                    ? L("Lively", "متنوعة")
+                    : L("Moderate", "متوسطة")
             }
             warn={tone.delivery === "flat"}
           />
@@ -276,11 +278,12 @@ export default function SpeechRecorder({ lang }: { lang: Lang }) {
                   )
                 : L("Voice movement (semitones)", "حركة النبرة (نص-درجة)")
             }
-            value={tone.pitch.variation_st}
+            value={tone.delivery === "unknown" ? "—" : tone.pitch.variation_st}
             warn={
-              tone.baseline?.targetVariationSt
+              tone.delivery !== "unknown" &&
+              (tone.baseline?.targetVariationSt
                 ? tone.pitch.variation_st < tone.baseline.targetVariationSt
-                : tone.pitch.variation_st < 2
+                : tone.pitch.variation_st < 2)
             }
           />
           <Stat

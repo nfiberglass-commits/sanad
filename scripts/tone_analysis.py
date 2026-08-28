@@ -171,9 +171,11 @@ def analyze_tone(path: str, segments: list | None = None) -> dict:
         "speaking_ratio": round(speaking_ratio, 2),
         "pace_variation": pace_variation,
         # Indicative band, not a diagnosis. < 2 semitones of movement is a
-        # widely used marker of flat delivery.
+        # widely used marker of flat delivery. All-zero pitch means too few
+        # voiced frames were found — a FAILED measurement, never a verdict.
         "delivery": (
-            "flat" if pitch["variation_st"] and pitch["variation_st"] < 2.0
+            "unknown" if not pitch["median_hz"]
+            else "flat" if pitch["variation_st"] < 2.0
             else "varied" if pitch["variation_st"] >= 3.5
             else "moderate"
         ),

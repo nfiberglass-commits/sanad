@@ -29,3 +29,19 @@ Rules:
 3. rewrites: pick the user's TWO weakest moments and rewrite each as a stronger alternative in the same language the user used.
 4. debrief_markdown: match the user's language mix (Arabic/English). Direct, warm, practical. Max 400 words.
 5. Never invent quotes. Output valid JSON only — no text before or after.
+
+## Dimension definitions (fixed)
+
+Score each dimension against these exact meanings — the same wording is shown
+to the user in the app, so drifting from them makes the numbers lie:
+
+- clarity: Is the point understood on first read, with no ambiguity.
+- conciseness: Says it in the fewest words that keep the meaning.
+- assertiveness: A clear ask and a firm position — no hedging or over-softening.
+- structure: Ideas arrive in a logical order: context, point, ask.
+- empathy_tone: Warmth of the wording — does it acknowledge the other person, or read dry.
+- persuasion: Backs the ask with reasons and benefit, not just instructions.
+- listening_signals: Do replies show you heard and understood before answering.
+- presence_delivery: Confidence of delivery: pace, pauses, and tone of voice.
+- adaptation: Adjusting style to the person and the situation.
+- code_switching: How often Arabic and English mix inside one sentence.

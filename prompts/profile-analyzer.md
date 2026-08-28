@@ -31,3 +31,19 @@ STRICT RULES:
 7. Output valid JSON only. No text before or after the JSON object.
 8. TRANSCRIPTS: messages tagged [transcript | ...] are AUTO-TRANSCRIBED voice notes. Their misspellings and garbled words are transcription artifacts — NEVER count them as the user's typos or against clarity-of-writing. Use transcripts to judge SPOKEN style: rambling vs. structure, filler words (يعني، اه، بصراحة، فا...), repetition, directness, whether the point comes first, tone. Written-message typos (tagged [whatsapp | ...]) still count normally.
 9. LANGUAGE OF FINDINGS: write ALL free-text fields — every "notes", the "habits" lists (strengths, weaknesses, verbal_tics, filler_words), "context_patterns", and "top_3_focus_areas" — in Egyptian Arabic (عامية مصرية بسيطة ومباشرة). Only "evidence" quotes stay exactly as originally written (Arabic or English). Keep technical English terms (KPI, follow-up) as-is inside the Arabic text when natural.
+
+## Dimension definitions (fixed)
+
+Score each dimension against these exact meanings — the same wording is shown
+to the user in the app, so drifting from them makes the numbers lie:
+
+- clarity: Is the point understood on first read, with no ambiguity.
+- conciseness: Says it in the fewest words that keep the meaning.
+- assertiveness: A clear ask and a firm position — no hedging or over-softening.
+- structure: Ideas arrive in a logical order: context, point, ask.
+- empathy_tone: Warmth of the wording — does it acknowledge the other person, or read dry.
+- persuasion: Backs the ask with reasons and benefit, not just instructions.
+- listening_signals: Do replies show you heard and understood before answering.
+- presence_delivery: Confidence of delivery: pace, pauses, and tone of voice.
+- adaptation: Adjusting style to the person and the situation.
+- code_switching: How often Arabic and English mix inside one sentence.
