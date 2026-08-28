@@ -29,6 +29,16 @@ const dict = {
   nav_roleplay: ["Roleplay", "التمرين"],
   nav_data: ["Data Sources", "مصادر البيانات"],
   nav_settings: ["Settings", "الإعدادات"],
+  nav_sessions: ["Sessions", "الجلسات"],
+  sess_title: ["Sessions", "الجلسات"],
+  sess_scores: ["Scores", "الدرجات"],
+  sess_debrief: ["Coach evaluation", "التقييم"],
+  sess_metrics: ["Measurements", "القياسات"],
+  sess_transcript: ["Transcript", "المحادثة"],
+  col_mode: ["Type", "النوع"],
+  mode_roleplay: ["Roleplay", "تمرين مواقف"],
+  mode_speech: ["Speech drill", "تمرين صوت"],
+  all_sessions: ["All sessions", "كل الجلسات"],
   logout: ["Logout", "خروج"],
 
   // login

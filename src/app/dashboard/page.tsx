@@ -9,11 +9,12 @@ export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
   const lang = await getLang();
-  const [selfCount, otherCount, profile, sessions] = await Promise.all([
+  const [selfCount, otherCount, profile, sessions, sessionCount] = await Promise.all([
     prisma.message.count({ where: { author: "self" } }),
     prisma.message.count({ where: { author: "other" } }),
     latestProfile(),
     prisma.session.findMany({ orderBy: { createdAt: "desc" }, take: 10 }),
+    prisma.session.count(),
   ]);
 
   const radar =
@@ -39,7 +40,7 @@ export default async function DashboardPage() {
         <Stat label={t(lang, "stat_your_messages")} value={selfCount} />
         <Stat label={t(lang, "stat_context")} value={otherCount} />
         <Stat label={t(lang, "stat_profile_version")} value={profile ? `v${profile.version}` : "—"} />
-        <Stat label={t(lang, "stat_sessions")} value={sessions.length} />
+        <Stat label={t(lang, "stat_sessions")} value={sessionCount} />
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
@@ -66,9 +67,14 @@ export default async function DashboardPage() {
         <div className="bg-white border border-slate-200 rounded-xl p-4">
           <div className="flex items-center justify-between">
             <h2 className="font-medium text-emerald-700">{t(lang, "recent_sessions")}</h2>
-            <Link href="/roleplay" className="text-xs text-slate-600 hover:text-slate-900">
-              {t(lang, "new_session")}
-            </Link>
+            <span className="flex gap-3">
+              <Link href="/sessions" className="text-xs text-slate-600 hover:text-slate-900">
+                {t(lang, "all_sessions")}
+              </Link>
+              <Link href="/roleplay" className="text-xs text-slate-600 hover:text-slate-900">
+                {t(lang, "new_session")}
+              </Link>
+            </span>
           </div>
           {sessions.length === 0 ? (
             <p className="text-sm text-slate-500 mt-4">
@@ -98,7 +104,11 @@ export default async function DashboardPage() {
                       <td className="py-1.5 text-slate-600">
                         {s.createdAt.toISOString().slice(0, 10)}
                       </td>
-                      <td className="py-1.5">{s.scenario}</td>
+                      <td className="py-1.5">
+                        <Link href={`/sessions/${s.id}`} className="hover:text-emerald-700">
+                          {s.scenario}
+                        </Link>
+                      </td>
                       <td className="py-1.5 text-end text-emerald-700">
                         {overall !== null ? `${overall}/10` : "—"}
                       </td>

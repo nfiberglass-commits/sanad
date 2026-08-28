@@ -10,6 +10,7 @@ const LINKS: { href: string; key: DictKey }[] = [
   { href: "/profile", key: "nav_profile" },
   { href: "/roleplay", key: "nav_roleplay" },
   { href: "/speech", key: "nav_speech" },
+  { href: "/sessions", key: "nav_sessions" },
   { href: "/data-sources", key: "nav_data" },
   { href: "/settings", key: "nav_settings" },
   { href: "/guide", key: "nav_guide" },
